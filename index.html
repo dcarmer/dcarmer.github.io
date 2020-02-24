@@ -1,7 +1,354 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+*
+{
+	margin:0;
+	color:currentColor;
+	fill:currentColor;
+	text-decoration:none;
+	padding:0;
+}
+hr
+{
+	border-style: solid;
+    border-width: .5px;
+}
+
+
+
+html
+{
+	color:white;
+	background-color:black;
+	font-family:sans-serif;
+}
+body
+{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+}
+main
+{
+	width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+main > section
+{
+	border: 40px solid transparent;
+    box-sizing: border-box;
+	width: 80%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 50px;
+    border-top: 10px solid;
+    padding: 50px;
+    position: relative;
+}
+main > section:empty
+{
+	display:none;
+}
+main > section:before
+{
+	content: attr(id);
+    position: absolute;
+    top: -1em;
+    background: black;
+    padding: .3em;
+    font-size: x-large;
+	border-radius: 10px;
+}
+main > section:hover
+{
+	box-shadow: inset 0px 70px 20px -50px #ffffff33;
+}
+main > section:hover:before
+{
+	text-decoration:underline;
+}
+svg
+{
+	width: 100%;
+    height: 100%;
+}
+a:hover,
+a:active,
+a:focus
+{
+	text-decoration: underline;
+}
+
+
+#Title
+{
+	color: currentColor;
+    padding: 20px;
+    border: 2px solid;
+    border-radius: 100vh;
+}
+.RepoSite
+{
+	color: currentColor;
+    padding: 20px;
+    border: 2px solid;
+    border-radius: 20px;
+	width: 500px;
+	margin: 20px;
+	display: flex;
+    flex-direction: column;
+}
+.RepoSite hr
+{
+	margin: 10px 0;
+}
+.RepoSite:hover
+{
+	box-shadow: 0px 0px 10px 4px #ffffff33;
+}
+.RepoSite header
+{
+	display: flex;
+    justify-content: space-between;
+	align-items: center;
+}
+.RepoSite .RepoTitle
+{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.RepoSite .RepoTitle:before
+{
+	content: "/";
+    line-height: 1em;
+    font-weight: bold;
+    font-size: 150%;
+    margin-right: 3px;
+}
+.Github, 
+.GithubPages
+{
+	display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100vh;
+	padding: 5px;
+	line-height: 1em;
+}
+.Github
+{
+	background-color:#28a745;
+}
+.GithubPages
+{
+	background-color:#327fc7;
+	position: relative;
+    padding-left: calc(1em + 5px);
+}
+.GithubPages:before
+{
+	content:'\1F310';
+	position: absolute;
+    left: 0;
+}
+.GithubPages:after
+{
+	content:"Homepage";
+}
+.Github:before
+{
+	content: url("data:image/svg+xml; utf8, <svg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' fill='white'><path fill-rule='evenodd' d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'></path></svg>");
+	height: 1em;
+    width: 1em;
+    margin-right: 5px;
+}
+.Github:after
+{
+	content: "GitHub";
+}
+.RepoSite .languages,
+.RepoSite .topics,
+{
+	display:flex;
+	flex-wrap:wrap;
+}
+.RepoSite .languages li,
+.RepoSite .topics li
+{
+    border-radius: 100vh;
+    padding: 5px;
+    min-width: 4em;
+    display: inline-flex;
+    justify-content: center;
+    margin: 5px;
+    font-size: .8em;
+	cursor: default;
+	line-height: 1em;
+	text-transform: capitalize;
+}
+.RepoSite .languages li
+{
+	background: darkred;
+}
+.RepoSite .topics li
+{
+	background: #007788;
+}
+.RepoSite .languages li:hover,
+.RepoSite .topics li:hover
+{
+	box-shadow: 0px 0px 0px 1px white;
+}
+.RepoSite footer
+{
+display: flex;
+    justify-content: space-between;
+    margin-bottom: -10px;
+    font-size: x-small;
+    margin-top: auto;
+    padding-top: 20px;
+}
+.RepoSite time
+{
+	font-family:monospace;
+}
+
+
+</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<svg style="display:none;">
+	<symbol id="GithubSymbol" viewBox="0 0 16 16" xmlns='http://www.w3.org/2000/svg'>
+		<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+	</symbol>
+</svg>
+
+<a id="Title" href="https://github.com/dcarmer/dcarmer.github.io"><h1>dcarmer.github.io</h1></a>
+<main>
+	<section id="Games"></section>
+	<section id="Rendering"></section>
+	<section id="Misc"></section>
+	
+</main>
 </body>
+<script>
+
+const GithubUsername = "dcarmer";
+const GithubPagesUserSiteRepoName = GithubUsername+".github.io";
+
+function equalsIgnoringCase(text, other) 
+{
+    return text.localeCompare(other, undefined, { sensitivity: 'base' }) === 0;
+}
+
+
+fetch("https://api.github.com/users/"+GithubUsername+"/repos")
+.then(response => response.json())
+.then(repos => 
+{
+	repos = repos.filter((repo, i, arr) => repo['name'] != GithubPagesUserSiteRepoName);
+	//API - Repos
+	return Promise.all([
+		//API - Augment Repo Languages
+		Promise.all(
+			repos.map(repo => 
+				fetch("https://api.github.com/repos/"+GithubUsername+"/"+repo['name']+"/languages")
+				.then(response => response.json())
+				.then(repoLangs => {repo['languages'] = repoLangs;})
+			)
+		),
+		//API - Augment Repo Topics
+		Promise.all(
+			repos.map(repo => 
+				fetch("https://api.github.com/repos/"+GithubUsername+"/"+repo['name']+"/topics", {headers:{'Accept':'application/vnd.github.mercy-preview+json'}})
+				.then(response => response.json())
+				.then(repoTopics => {repo['topics'] = repoTopics.names;})
+			)
+		)
+	]).then(()=>repos);
+})
+.then(repos => 
+{
+	console.log(repos);
+	let GamesSection = document.getElementById("Games");
+	let RenderingSection = document.getElementById("Rendering");
+	let MicsSection = document.getElementById("Misc");
+	
+	for(const repo of repos)
+	{
+		let RepoElement = document.createElement("ARTICLE");
+			RepoElement.setAttribute("class","RepoSite");
+		
+		//TODO better way of determining categories
+		if(repo['topics'].includes("game"))
+		{
+			GamesSection.appendChild(RepoElement);
+		}
+		else if(repo['topics'].includes("rendering"))
+		{
+			RenderingSection.appendChild(RepoElement);
+		}
+		else
+		{
+			MicsSection.appendChild(RepoElement);
+		}
+			
+			
+			
+			let inner = '<header>';
+			inner += '<h2 class="RepoTitle">'+repo['name']+'</h2>';
+			if(repo['has_pages'])
+			{
+				inner += '<a class="GithubPages" href="'+repo['homepage']+'"></a>';
+			}
+			inner += '<a class="Github" href="'+repo['html_url']+'"></a>';
+			inner += '</header>';
+			inner += '<hr/>';
+			if(repo['languages'])
+			{
+				inner += '<ul class="languages">';
+				for(const lang in repo['languages'])
+				{
+					inner += '<li>'+lang+'</li>';
+				}
+				inner += '</ul>';
+			}
+			if(repo['topics'])
+			{
+				inner += '<ul class="topics">';
+				for(const topic of repo['topics'])
+				{
+					inner += '<li>'+topic+'</li>';
+				}
+				inner += '</ul>';
+			}
+			if(repo['description'])
+			{
+				inner += '<p>'+repo['description']+'</p>';
+			}
+			let Created = new Date(repo['created_at']);
+			let Updated = new Date(repo['updated_at']);
+			inner += '<footer>';
+			inner += '<time datetime="'+repo['created_at']+'">Created - '+Created.toLocaleDateString()+'</time>';
+			inner += '<time datetime="'+repo['updated_at']+'">Updated - '+Updated.toLocaleDateString()+'</time>';
+			inner += '</footer>';
+			
+			RepoElement.innerHTML = inner;
+	}
+//https://api.github.com/users/dcarmer
+    //blog, name, html_url, avatar_url
+})
+.catch((error)=>
+{
+	console.log(error);
+});
+</script>
 </html>
