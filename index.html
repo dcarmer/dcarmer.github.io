@@ -85,6 +85,11 @@ a:focus
 	text-decoration: underline;
 }
 
+a:not([href])
+{
+	cursor: not-allowed;
+}
+
 
 #Title
 {
@@ -104,6 +109,12 @@ a:focus
 	display: flex;
     flex-direction: column;
 }
+.RepoSite nav
+{
+	display:flex;
+	justify-content:flex-end;
+	flex-wrap: wrap;
+}
 .RepoSite hr
 {
 	margin: 10px 0;
@@ -121,8 +132,9 @@ a:focus
 .RepoSite .RepoTitle
 {
 	display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+	white-space: nowrap;
 }
 .RepoSite .RepoTitle:before
 {
@@ -249,7 +261,12 @@ function equalsIgnoringCase(text, other)
     return text.localeCompare(other, undefined, { sensitivity: 'base' }) === 0;
 }
 
-
+//Unauthenticated API call rate limit is 60 per hour
+//Each visit this page currently makes:
+// 1 - list repos
+// repo# - list languages
+// repo# - list topics
+// That means roughly 6 visits per hour, TODO NEED to use auth for higher limit, or find a way to cache results
 fetch("https://api.github.com/users/"+GithubUsername+"/repos")
 .then(response => response.json())
 .then(repos => 
@@ -258,7 +275,7 @@ fetch("https://api.github.com/users/"+GithubUsername+"/repos")
 	//API - Repos
 	return Promise.all([
 		//API - Augment Repo Languages
-		Promise.all(
+		/*Promise.all(
 			repos.map(repo => 
 				fetch("https://api.github.com/repos/"+GithubUsername+"/"+repo['name']+"/languages")
 				.then(response => response.json())
@@ -272,7 +289,7 @@ fetch("https://api.github.com/users/"+GithubUsername+"/repos")
 				.then(response => response.json())
 				.then(repoTopics => {repo['topics'] = repoTopics.names;})
 			)
-		)
+		)*/
 	]).then(()=>repos);
 })
 .then(repos => 
@@ -288,11 +305,11 @@ fetch("https://api.github.com/users/"+GithubUsername+"/repos")
 			RepoElement.setAttribute("class","RepoSite");
 		
 		//TODO better way of determining categories
-		if(repo['topics'].includes("game"))
+		if(repo['topics'] && repo['topics'].includes("game"))
 		{
 			GamesSection.appendChild(RepoElement);
 		}
-		else if(repo['topics'].includes("rendering"))
+		else if(repo['topics'] && repo['topics'].includes("rendering"))
 		{
 			RenderingSection.appendChild(RepoElement);
 		}
@@ -305,11 +322,18 @@ fetch("https://api.github.com/users/"+GithubUsername+"/repos")
 			
 			let inner = '<header>';
 			inner += '<h2 class="RepoTitle">'+repo['name']+'</h2>';
-			if(repo['has_pages'])
+			inner += '<nav>';
+			if(repo['has_pages']) //If has pages enabled
 			{
-				inner += '<a class="GithubPages" href="'+repo['homepage']+'"></a>';
+				let href = "";
+				if(repo['homepage']) //If homepage exists
+				{
+					href = 'href="'+repo['homepage']+'"';
+				}
+				inner += '<a class="GithubPages" '+href+'"></a>';
 			}
 			inner += '<a class="Github" href="'+repo['html_url']+'"></a>';
+			inner += '</nav>';
 			inner += '</header>';
 			inner += '<hr/>';
 			if(repo['languages'])
